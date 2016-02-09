@@ -1,0 +1,83 @@
+@charset "utf-8";
+/* CSS Document */
+@font-face {
+    font-family: 'zektonitalic';
+    src: url('zektonit-webfont.eot');
+    src: url('zektonit-webfont.eot?#iefix') format('embedded-opentype'),
+         url('zektonit-webfont.woff2') format('woff2'),
+         url('zektonit-webfont.woff') format('woff'),
+         url('zektonit-webfont.ttf') format('truetype'),
+         url('zektonit-webfont.svg#zektonitalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'libertadbold_italic';
+    src: url('libertad-bolditalic-webfont.eot');
+    src: url('libertad-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('libertad-bolditalic-webfont.woff2') format('woff2'),
+         url('libertad-bolditalic-webfont.woff') format('woff'),
+         url('libertad-bolditalic-webfont.ttf') format('truetype'),
+         url('libertad-bolditalic-webfont.svg#libertadbold_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.main-body {
+	background-color:#EBEBEB;
+	color:#2D2D2D;	
+	text-align:center;	
+}
+
+.small-border {
+	border-top:3px solid #D9D9D9;
+	border-right:3px solid #D9D9D9;
+	border-bottom:3px solid #D9D9D9;
+	-moz-transition:all 2s ease-in-out;
+	transition:all 2s ease-in-out;
+	-webkit-transition:all 2s ease-in-out;	
+}
+
+.small-border-search-right {
+	border-top:3px solid #D9D9D9;
+	border-left:3px solid #D9D9D9;
+	border-bottom:3px solid #D9D9D9;
+	-moz-transition:all 2s ease-in-out;
+	transition:all 2s ease-in-out;
+	-webkit-transition:all 2s ease-in-out;	
+	
+}
+
+.shadow {
+	-webkit-box-shadow: 2px 2px 5px 0px rgba(120,120,120,1);
+	-moz-box-shadow: 2px 2px 5px 0px rgba(120,120,120,1);
+	box-shadow: 2px 2px 5px 0px rgba(120,120,120,1);	
+}
+
+.search {
+	padding: 10px 5px 10px 5px;
+	position:relative;
+	width:100%;
+	background:#262626;	
+}
+
+input[type="search"]:focus {
+	background:#F4FFBC;
+	border:2px solid #CBCBCB;
+	font-weight:600;
+	
+}
+
+.languages {
+	margin-top:13%;
+	width:100%;	
+}
+
+.search input[type="submit"] {
+	width:1in;	
+}
+
+.circle {
+	border-radius: 50%;	
+}

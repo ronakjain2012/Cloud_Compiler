@@ -17,13 +17,16 @@
   	<?php include('include/nav-header.php'); ?>
     <div class="edit">
     	<form action="php_output.php" method="post" target="output">
-        <textarea  id="editor" name="editor" class="form-control">
+        <textarea  id="editor" name="editor" class="form-control" autofocus="on">
+        <?php echo "<?php 
+			echo 'Hello World';
+		?>
+		"; ?>
         </textarea>
         <input type="submit" value="Result"  class="btn btn-default"/>
         </form>
         <br/>
-        <iframe name="output" height="300" width="100%" src="php_output.php">
-        <iframe>
+        <iframe name="output" height="300" width="100%" src="php_output.php" class="output"><iframe>
     </div>
   </div>
  </div>

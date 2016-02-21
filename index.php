@@ -46,30 +46,26 @@
     <div class="languages"> 
       <!-- first Row Start -->
       <div class="row">
+        <a href="PHP_Compiler.php">
         <div class="col-md-3 col-sm-3">
-          <div class="thumbnail "> <img src="images/PHP.png" class="rotate-360" alt="PHP">
+          <div class="thumbnail "> <img src="images/1/PHP.png" class="rotate-360" alt="PHP">
             <div class="caption">
               <p> <!-- Any Text --></p>
               <p><a href="PHP_Compiler.php" class="btn btn-primary  btn-go" role="button">Go</a></p>
             </div>
           </div>
         </div>
-        <div class="col-md-3 col-sm-3">
-          <div class="thumbnail"> <img src="images/PHPsql.png" class="rotate-360" alt="PHP with MYSQL">
-            <div class="caption">
-              <p> <!-- Any Text --></p>
-              <p><a href="#" class="btn btn-primary  btn-go" role="button">Go</a></p>
-            </div>
-          </div>
-        </div>
+        </a>
+        <a href="SQL_Compiler.php">
         <div class="col-md-3 col-sm-3">
           <div class="thumbnail"> <img src="images/sql.png" class="rotate-360" alt="SQL">
             <div class="caption">
               <p> <!-- Any Text --></p>
-              <p><a href="#" class="btn btn-primary  btn-go" role="button">Go</a></p>
+              <p><a href="SQL_Compiler.php" class="btn btn-primary  btn-go" role="button">Go</a></p>
             </div>
           </div>
         </div>
+        </a>
         <div class="col-md-3 col-sm-3">
           <div class="thumbnail"> <img src="images/pl-sql.png" class="rotate-360" alt="PL/SQL">
             <div class="caption">
@@ -78,7 +74,17 @@
             </div>
           </div>
         </div>
+        <div class="row">
+        <div class="col-md-3 col-sm-3">
+          <div class="thumbnail"> <img src="images/html.png" class="rotate-360" alt="HTML">
+            <div class="caption">
+              <p> <!-- Any Text --></p>
+              <p><a href="#" class="btn btn-primary btn-go" role="button">Go</a></p>
+            </div>
+          </div>
+        </div>
       </div>
+      
       <!-- First Row END --> 
       <!-- Second Row Start -->
       <div class="row">

@@ -16,7 +16,7 @@ if(isset($_POST['editor'])) {
 	fclose($myfile);
 	unlink($name);
 } else 
-	echo "<center><h3> Output Here </h3>";
+	echo "<center><h3 style='font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, sans-serif;'> Output Here </h3>";
 ?>
 </body>
 </html>

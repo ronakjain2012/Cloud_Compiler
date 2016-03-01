@@ -23,11 +23,12 @@
 		} else {
 			if(1){
 				$query = htmlspecialchars_decode($_POST['editor']);
-				$set = $con->multi_query($query);
-				if($set) {
+				if($con->multi_query($query)) {
 					try {
 						do {
 							$res = $con->store_result();
+							
+							if($res) {
 							$num_col = $res->field_count;
 							echo "<table class='table table-bordered'>";
 							while($result = $res->fetch_row()) {
@@ -41,7 +42,16 @@
 							}
 							echo "</table> <br/>";
 							$res->free();
+							} else {
+								echo "Error :".$con->errno.", ".$con->error;
+							}
+							
 						} while($con->more_results() && $con->next_result());
+						
+						if($con->errno) {
+								echo "Error : ".$con->errno.", ".$con->error;
+						}
+						
 					} catch(Exception $ex) {
 						echo $ex->getMessage();
 					}
@@ -52,8 +62,10 @@
 				echo "DataBase Not Exiests";
 			}
 		}
-	} else 
+	} else { 
 		echo "No Query Fired ";
+		die();
+	}
 ?>
 </body>
 </html>

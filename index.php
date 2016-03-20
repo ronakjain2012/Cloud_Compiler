@@ -45,8 +45,8 @@
     <!-- Search END -->
     <div class="languages"> 
       <!-- first Row Start -->
-      <div class="row">
-        <a href="PHP_Compiler.php">
+      <div class="row"> 
+      <a href="PHP_Compiler.php">
         <div class="col-md-3 col-sm-3">
           <div class="thumbnail "> <img src="images/1/PHP.png" class="rotate-360" alt="PHP">
             <div class="caption">
@@ -55,8 +55,7 @@
             </div>
           </div>
         </div>
-        </a>
-        <a href="SQL_Compiler.php">
+        </a> <a href="SQL_Compiler.php">
         <div class="col-md-3 col-sm-3">
           <div class="thumbnail"> <img src="images/sql.png" class="rotate-360" alt="SQL">
             <div class="caption">
@@ -65,7 +64,7 @@
             </div>
           </div>
         </div>
-        </a>
+        </a> <a href="plsql_Compiler.php">
         <div class="col-md-3 col-sm-3">
           <div class="thumbnail"> <img src="images/pl-sql.png" class="rotate-360" alt="PL/SQL">
             <div class="caption">
@@ -74,7 +73,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        </a> <a>
         <div class="col-md-3 col-sm-3">
           <div class="thumbnail"> <img src="images/html.png" class="rotate-360" alt="HTML">
             <div class="caption">
@@ -83,7 +82,8 @@
             </div>
           </div>
         </div>
-      </div>
+        </a> 
+       </div>
       
       <!-- First Row END --> 
       <!-- Second Row Start -->

@@ -28,6 +28,7 @@ class Database {
 		return $this->_connection;
 	}
 	
+	
 }
 
 class Query extends Database {

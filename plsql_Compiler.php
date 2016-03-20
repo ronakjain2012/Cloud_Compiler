@@ -2,11 +2,12 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>PHP Compiler</title>
+<title>PL/SQL SQL | CC</title>
 <!-- Stylesheet files-->
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="css/checkbox_style.css">
+
 <script src="js/script.js"></script>
 <script src="jquery/jquery-1.8.3.min.js"></script>
 <script src="ace/ace.js"></script>
@@ -22,12 +23,10 @@ $(document).ready(function(){
 <?php require('include/fpdf.php'); ?>
 </head>
 <body>
-<!-- Bootstrap div Start -->
 <div class="col-lg-12 col-md-12 col-sm-12">
-  <div>
-    <?php 
+<div>
+<?php 
 	include('include/nav-header.php'); 
-	
 	if(isset($_POST['editorPDF'])) {
 		$temp = htmlspecialchars_decode($_POST['editorPDF']);
 		ob_start();
@@ -37,37 +36,35 @@ $(document).ready(function(){
 		$pdf->Multicell(190,5,$temp,'T');
 		$pdf->Output();
 		ob_end_flush();
-	}
+	}	
 ?>
-    <div class="edit">
-      <form action="php_output.php" method="post" target="output" id="myForm">
-      <textarea name="editor" id="editor" class="editor editor-style" autofocus>
-<?php echo "<?php 
-	echo 'Hello World';
-?>
-"; ?>
-     </textarea>
-      <script>
-  			$('.editor').ace({ theme: 'twilight', lang: 'ruby' });
+<div class="edit">
+  <form action="plsql_output.php" method="post" target="output" id="myForm">
+    <textarea name="editor" id="editor" class="editor editor-style" autofocus>
+select table_name from user_tables;
+	</textarea>
+    <script>	
+	$('.editor').ace({ theme: 'chrome', lang: 'ruby' });	
 	</script>
-      <div class="input-group col-lg-12 col-md-12 col-sm-12 buttons">
+    <div class="input-group col-lg-12 col-md-12 col-sm-12 buttons">
       <BR/>
+    
       <input type="checkbox" id="checkbox1" class="css-checkbox" onClick="fullScreenEditor();"/>
       <label for="checkbox1" class="css-label lite-cyan-check">Result In New TAB</label>
       <input type="submit" value="Result" class="btn btn-success" />
-      
     </div>
-    </form>
-    <form method="post" target="new">
+  </form>
+  <form method="post" target="new">
         <input type="hidden" name="editorPDF" id="Input_PDF"/>
         <button type="submit" class="btn btn-default" onClick="return readCode();" data-toggle="tooltip" data-placement="top" title="Download In PDF"> <span class="glyphicon glyphicon-download"> </span> PDF </button>
       </form>
-    <br/>
-    <iframe name="output" height="300" width="100%" src="php_output.php" class="output" id="output"></iframe>
-  </div>
+  <br/>
+  <iframe name="output" height="300" width="100%" src="php_output.php" class="output" id="output">
+  <iframe>
 </div>
 </div>
+</div>
+
 </body>
-<!-- JavaScript Files -->
 <script src="js/bootstrap.js"></script>
 </html>

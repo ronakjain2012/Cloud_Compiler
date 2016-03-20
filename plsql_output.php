@@ -2,17 +2,23 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>PHP</title>
+<title>PL/SQL SQL | CC</title>
 </head>
 <body>
+
 <?php
 if(isset($_POST['editor'])) {
 	$name = (rand()*100+1);
-	$name="temp_".$name.".php";
+	$name="temp_".$name.".sql";
 	$myfile = fopen("$name", 'w') or die("Unable to open file!");
 	$msg=htmlspecialchars_decode($_POST['editor']);
+	if(substr($msg,-1) != '/') {
+		$msg .= '
+		/'; 
+	}
 	fwrite($myfile,$msg);
-	include($name);
+	echo "<pre>";
+	echo shell_exec('sqlplus system/root @'.$name);
 	fclose($myfile);
 	unlink($name);
 } else 

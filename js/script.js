@@ -4,7 +4,8 @@ function fullScreenEditor() {
 	if(c == true) {
 		document.getElementById('output').style.display = "none";
 		document.getElementById('myForm').setAttribute('target','_new');
-	} if (c == false) {
+	} 
+	if (c == false) {
 		document.getElementById('output').style.display = "block";
 		document.getElementById('myForm').setAttribute('target','output');
 	}
@@ -12,5 +13,21 @@ function fullScreenEditor() {
 
 function readCode() {
 	var code = document.getElementById('editor').value;
-	document.getElementById('Input_PDF').setAttribute('value',' '+code);
+	
+	if(code.length >= 1) {
+	document.getElementById('Input_CodeQR').setAttribute('value','');
+	document.getElementById('Input_CodePDF').setAttribute('value',' '+code);
+	} else {
+		alert('Sorry ! No Code Is Written');
+	}
+}
+
+function readCode1() {
+	var code = document.getElementById('editor').value;
+	if(code.length >= 1) {
+	document.getElementById('Input_CodePDF').setAttribute('value','');
+	document.getElementById('Input_CodeQR').setAttribute('value',' '+code);
+	} else {
+		alert('Sorry ! No Code Is Written');
+	}
 }

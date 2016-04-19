@@ -5,7 +5,7 @@ class Database {
 	private $DB_host = "localhost";
 	private $DB_user_name = "root";
 	private $DB_user_password = "root";
-	private $DB_database = "test";
+//	private $DB_database = "test";
 	
 	public static function getInstance() {
 		if(!self::$_instance) { // If no instance then make one
@@ -16,7 +16,7 @@ class Database {
 	
 	private function __construct() {
 		$this->_connection = new mysqli($this->DB_host, $this->DB_user_name, 
-			$this->DB_user_password, $this->DB_database);
+			$this->DB_user_password);
 	
 		// Error handling
 		if(mysqli_connect_error()) {

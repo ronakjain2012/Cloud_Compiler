@@ -7,29 +7,14 @@
 <!-- Stylesheet files-->
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
 <link href="css/style.css" rel="stylesheet" type="text/css">
+<script src="../jquery/jquery-1.8.3.min.js"></script>
+<script src="../js/modal.js"></script>
 </head>
 <body class="main-body">
 <!-- Bootstrap div Start -->
 <div class="col-lg-12 col-md-12 col-sm-12">
   <div> 
-    <!-- Nav Start -->
-    <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <div class="navbar-header"> <a class="navbar-brand" style="color:#EDEDED;"> &#60; &#47; &#62; Cloud Complier</a> </div>
-        <ul class="nav navbar-nav">
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Sign In</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Sign Up</a></li>
-        </ul>
-      </div>
-    </nav>
-    <!-- Nav END --> 
+    <?php include('include/nav-header.php');  ?>
     <!-- Search START -->
     <div class="search col-lg-12 col-md-11 col-sm-11">
       <form method="post" action="#">

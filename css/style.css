@@ -1,31 +1,8 @@
 @charset "utf-8";
 /* CSS Document */
-@font-face {
-    font-family: 'zektonitalic';
-    src: url('zektonit-webfont.eot');
-    src: url('zektonit-webfont.eot?#iefix') format('embedded-opentype'),
-         url('zektonit-webfont.woff2') format('woff2'),
-         url('zektonit-webfont.woff') format('woff'),
-         url('zektonit-webfont.ttf') format('truetype'),
-         url('zektonit-webfont.svg#zektonitalic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'libertadbold_italic';
-    src: url('libertad-bolditalic-webfont.eot');
-    src: url('libertad-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('libertad-bolditalic-webfont.woff2') format('woff2'),
-         url('libertad-bolditalic-webfont.woff') format('woff'),
-         url('libertad-bolditalic-webfont.ttf') format('truetype'),
-         url('libertad-bolditalic-webfont.svg#libertadbold_italic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
 
 .main-body {
-	background-color:#EBEBEB;
+	background-color:#F7F7F7;
 	color:#2D2D2D;	
 	text-align:center;	
 }
@@ -86,6 +63,7 @@ input[type="search"]:focus {
 	background:#14959C;
 	transition:all 1s linear;	
 	width:35%;
+	border:none;
 }
 
 .rotate-360 {
@@ -115,6 +93,86 @@ input[type="search"]:focus {
 .buttons {
 	height:10%;
 	text-align:right;
+}
+
+input[type="text"].input,input[type="email"].input,input[type="tel"].input {
+	height:40px;
+	font-weight:600;	
+	font-size:18px;
+	transition:all linear 0.3s;
+}
+
+input[type="text"].input:focus,input[type="email"].input:focus,input[type="tel"].input:focus {
+	border-bottom:5px solid #5ED55D;
+}
+
+.input {
+	margin: 20px 5px 10px 5px;
+	height:40px;
+}
+
+.lables {
+	margin-top: 20px;
+	font-size:20px;
+	
+}
+
+.Forms {
+	margin: 10px 10px 10px 10px;
+	border-radius:5px;
+}
+
+.captcha {
+	background:#C1FFD9;
+}
+
+.noselect {
+  -webkit-touch-callout: none; 
+  -webkit-user-select: none;   
+  -khtml-user-select: none;   
+  -moz-user-select: none;      
+  -ms-user-select: none;       
+  user-select: none;           
+}
+
+.AskButtons {
+	width:300px;
+	height:40px;
+	margin: 20px 20px 20px 20px;
+}
+
+.Welcome {
+		text-align:center;
+		font-size:70px;
+		font-family:'fudoni_threeregular';
+	}
+.WelcomeCap {
+		text-align:right;
+		font-size:35px;
+		margin-right:20%;
+		margin-bottom:100px;
+		font-family:'fudoni_tworegular';
+	}
+
+.LinkL {
+	cursor:default;
+}
+
+.LinkR {
+	cursor:default;
+}
+
+img {
+	width:auto;
+	height:auto;	
+}
+
+@media screen and (max-width: 480px) {
+	.Welcome {
+		text-align:center;
+		margin-bottom:10px;
+		
+	}
 }
 
 @-webkit-keyframes spin {

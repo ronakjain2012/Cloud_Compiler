@@ -54,11 +54,23 @@ select table_name from user_tables;
       <input type="submit" value="Result" class="btn btn-success" />
     </div>
   </form>
-  <form method="post" target="new">
-        <input type="hidden" name="editorPDF" id="Input_PDF"/>
-        <button type="submit" class="btn btn-default" onClick="return readCode();" data-toggle="tooltip" data-placement="top" title="Download In PDF"> <span class="glyphicon glyphicon-download"> </span> PDF </button>
-      </form>
-  <br/>
+  <div class="col-lg-12 col-md-2 col-sm-1">
+      <div class="row">
+        <div class="col-lg-1 col-md-1">
+        <form method="post" id="buttonForm" target="_blank">
+          <input type="hidden" name="editorPDF" id="Input_CodePDF"/>
+          <button type="submit" class="btn btn-default" onClick="return readCode();" data-toggle="tooltip" data-placement="top" title="Download In PDF"> <span class="glyphicon glyphicon-download"> </span> PDF </button>
+        </form>
+        </div>
+        <div class="col-lg-1 col-md-1">
+        <form action="include/index.php" method="get" target="_blank">
+          <input type="hidden" name="editorQR" id="Input_CodeQR"/>
+          <button type="submit" class="btn btn-default" onClick="return readCode1();" data-toggle="tooltip" data-placement="top" title="Get QR Code"> <span class="glyphicon glyphicon-download"> </span> QR Code </button>
+        </form>
+        </div>
+        <br/>
+        </div>
+      </div>
   <iframe name="output" height="300" width="100%" src="php_output.php" class="output" id="output">
   <iframe>
 </div>

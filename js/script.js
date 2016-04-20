@@ -31,3 +31,12 @@ function readCode1() {
 		alert('Sorry ! No Code Is Written');
 	}
 }
+
+function readCode2() {
+	var code = document.getElementById('editor').value;
+	if(code.length >= 1) {
+	document.getElementById('fileValue').setAttribute('value',''+code);
+	} else {
+		alert('Sorry ! No Code Is Written');
+	}
+}

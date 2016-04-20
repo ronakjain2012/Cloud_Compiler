@@ -8,12 +8,13 @@
 <link rel="stylesheet" type="text/css" href="css/checkbox_style.css">
 
 <script src="js/script.js"></script>
-<script src="jquery/jquery-1.8.3.min.js"></script>
+<script src="jquery/jquery-1.20.min.js"></script>
 <script src="ace/ace.js"></script>
 <script src="ace/theme-twilight.js"></script>
 <script src="ace/mode-ruby.js"></script>
 <script src="jquery-ace.min.js"></script>
 <script src="js/tooltip.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
@@ -53,21 +54,56 @@ $(document).ready(function(){
     </div>
   </form>
  <div class="col-lg-12 col-md-2 col-sm-1">
-      <div class="row">
-        <div class="col-lg-1 col-md-1">
-        <form method="post" id="buttonForm" target="_blank">
-          <input type="hidden" name="editorPDF" id="Input_CodePDF"/>
-          <button type="submit" class="btn btn-default" onClick="return readCode();" data-toggle="tooltip" data-placement="top" title="Download In PDF"> <span class="glyphicon glyphicon-download"> </span> PDF </button>
-        </form>
-        </div>
-        <div class="col-lg-1 col-md-1">
-        <form action="include/index.php" method="get" target="_blank">
-          <input type="hidden" name="editorQR" id="Input_CodeQR"/>
-          <button type="submit" class="btn btn-default" onClick="return readCode1();" data-toggle="tooltip" data-placement="top" title="Get QR Code"> <span class="glyphicon glyphicon-download"> </span> QR Code </button>
-        </form>
+        <div class="row text-center">
+          <div class="col-lg-1 col-md-1">
+            <form method="post" id="buttonForm" target="_blank">
+              <input type="hidden" name="editorPDF" id="Input_CodePDF"/>
+              <button type="submit" class="btn btn-default btn-fullsize" onClick="return readCode();" data-toggle="tooltip" data-placement="top" title="Download In PDF"> <span class="glyphicon glyphicon-book"> </span> PDF </button>
+            </form>
+          </div>
+          <div class="col-lg-1 col-md-1">
+            <form action="include/index.php" method="get" target="_blank">
+              <input type="hidden" name="editorQR" id="Input_CodeQR"/>
+              <button type="submit" class="btn btn-default btn-fullsize" onClick="return readCode1();" data-toggle="tooltip" data-placement="top" title="Get QR Code"> <span class="glyphicon glyphicon-download"> </span> QR </button>
+            </form>
+          </div>
+          <div class="col-lg-1 col-md-1"> 
+            <!-- Trigger the modal with a button -->
+            <button type="button" class="btn btn-default btn-fullsize" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-save"></span> Save</button>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Save File</h4>
+                  </div>
+                  <div class="modal-body"> 
+                    <form method="POST" action="saveFile.php" target="_blank">
+                      <input type="hidden" value="sql" name="fileType" />
+                      <input type="hidden" id="fileValue" name="fileValue" />
+                      <div class="row">
+                      <div class="col-lg-3 col-md-3"><strong>File Name</strong> </div>
+                      <div class="col-lg-5 col-md-5">
+                        <input type="text" class="form-control free" name="fileName"/>
+                      </div>
+                      <div class="col-lg-2 col-sm-2">
+                        <input type="text" class="form-control free" name="fileExt" value="sql" readonly/>
+                      </div>
+                      <div class="col-lg-2 col-md-2">
+                        <button type="submit" onClick="return readCode2();" class="btn btn-success form-control free"> Save </button>
+                      </div>
+                      </div>
+                      <br/>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--END Modal --> 
+          </div>
         </div>
         <br/>
-        </div>
       </div>
       <br/>
   <iframe name="output" height="300" width="100%" src="sql_output.php" class="output" id="output">

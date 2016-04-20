@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="css/checkbox_style.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="include/Captcha/stylesheet.css">
+<link rel="stylesheet" type="text/css" href="css/checkbox_style.css">
 <script src="jquery/jquery-1.8.3.min.js"></script>
 <script>
 $(document).ready(function(e) {
@@ -14,16 +15,9 @@ $(document).ready(function(e) {
 	$('.Right').hide();
 });
 </script>
-<script>
-JQUERY4U = {
-	showLeft: function() {
-		$('#SignIn').click();
-	}
-}
-</script>
 
 </head>
-<body class="main-body">
+<body class="main-body"> 	
 <!-- PHP Include Files -->
 <?php include ("include/functions.php");?>
 <?php 
@@ -38,7 +32,9 @@ JQUERY4U = {
 <!-- End -->
 <div class="col-lg-12 col-md-12">
   <div class="col-lg-12 col-md-12 Forms"> 
+  
     <!-- Start AskButtonsArea -->
+    <br/><br/>
     <div class="AskButtonsArea">
       <div class="Welcome"> Welcome , <br/>
         <img src="images/CC.png"/>
@@ -98,8 +94,8 @@ JQUERY4U = {
 		$msg = null ;
 		if(isset($_GET['p']) and $_GET['p']=='old' and isset($_GET['error'])) {
 			?>
-			<script> JQUERY4U.showLeft(); </script>
-            <?php
+      <script> JQUERY4U.showLeft(); </script>
+      <?php
 			$type = normalizeString($_GET['error']);
 			if($type=="invalid") {
 				$msg = "Enterd wrong ID Password";
@@ -120,7 +116,7 @@ JQUERY4U = {
 	  ?>
       <form method="post">
         <div class="row">
-          <div class="col-lg-3 col-md-3">
+          <div class="col-lg-3 col-md-3 text-left">
             <label class="lables" for="userID"> User ID </label>
           </div>
           <div class="col-lg-7 col-md-7">
@@ -128,21 +124,29 @@ JQUERY4U = {
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-3 col-md-3">
+          <div class="col-lg-3 col-md-3 text-left">
             <label class="lables" for="userPWD"> Password </label>
           </div>
           <div class="col-lg-7 col-md-7">
             <input type="text" name="CC_userPassword" class="form-control input" id="userPWD"/>
           </div>
         </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-3">
+          </div>
+          <div class="col-lg-7 col-md-7 free">
+             <input type="checkbox" id="checkbox1" class="css-checkbox"/> <label for="checkbox1" class="css-label lite-cyan-check">Remember Me </label>
+          </div>
+        </div>
         <?php 
 			if(isset($msg)) {
 			?>
-				<div class="alert alert-danger" role="alert"><strong>Error!</strong><?php echo $msg;?></div>
-			<?php
+        <div class="row">
+        	<div class="alert alert-danger" role="alert"><strong>Error!</strong><?php echo $msg;?></div>
+        </div>
+        <?php
 			}
 		?>
-        
         <div class="row">
           <div class="col-lg-3 col-md-3"> &nbsp; </div>
           <div class="col-lg-7 col-md-7">
@@ -155,7 +159,7 @@ JQUERY4U = {
     <div class="col-lg-6 col-md-6 Right ">
       <div class="page-header"> <img src="images/CC.png"/> <br/>
         Sign Up </div>
-		<?php
+      <?php
 					
 		$userName = isset($_POST['CC_userName']) ? normalizeString($_POST['CC_userName']) : null ;
 		$userID = isset($_POST['CC_userID']) ? normalizeString($_POST['CC_userID']) : '';
@@ -177,7 +181,6 @@ JQUERY4U = {
 				if($res->num_rows === 1 and $result['users'] === 1) {
 					header("location: ".$url."?p=new&error=");
 					exit();
-					
 					$errors = 1;
 				}
 				 
@@ -208,7 +211,14 @@ JQUERY4U = {
 				}
 				
 				if($errors == 0) {
-					echo "Successful !";
+					$query = "insert into user_login_information (user_reg,user_name,user_password,user_type,user_mail) values('$userID','$userName','$userPassword','l','$userEmail')";
+					if($conn->query($query)){
+					header("location: ".$url."Members.php?status=regeistered");
+					exit(); 
+					} else {
+					header("location: ".$url."Members.php?p=new&error=unavailable");
+					exit();
+					}
 				}
 			} else {
 				echo "Require Fields are empty";
@@ -218,8 +228,8 @@ JQUERY4U = {
 		$msg1 = null ;
 		if(isset($_GET['p']) and $_GET['p']=='new' and isset($_GET['error'])) {
 			?>
-			<script> JQUERY4U.showRight(); </script>
-            <?php
+      <script> JQUERY4U.showRight(); </script>
+      <?php
 			$type = normalizeString($_GET['error']);
 			if($type=="alreadyExist") {
 				$msg1 = "Already Exist.";
@@ -230,15 +240,22 @@ JQUERY4U = {
 			else if($type=="captcha") {
 				$msg1 = "Enterd Captcha is not valid.";
 			}
-			else {
-				$msg1 = "Error Recored ! we will fix it soon";	
+			else if($type=="unavailable") {
+				$msg1 = "Sorry, Database is down.";	
 			}
-		}		
-
-		?>
-      <form method="post">
+			else {
+				$msg1 = "Recored ! we will fix it soon";	
+			}
+		}
+		
+		if(isset($_GET['status'])) {
+			$msg1 = "Successfully Registered With US.";	
+		}
+		
+		?>		
+      <form method="post" action="Members.php">
         <div class="row">
-          <div class="col-lg-3 col-md-3">
+          <div class="col-lg-4 col-md-4 text-left">
             <label class="lables" for="fullName"> Name </label>
           </div>
           <div class="col-lg-7 col-md-7">
@@ -246,15 +263,15 @@ JQUERY4U = {
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-3 col-md-3">
-            <label class="lables" for="fullName"> Registration ID </label>
+          <div class="col-lg-4 col-md-4 text-left">
+            <label class="lables" for="fullName "> Registration ID </label>
           </div>
           <div class="col-lg-7 col-md-7">
             <input type="text" name="CC_userID" class="form-control input" id="fullName" value="<?php echo isset($userID) ? $userID : '' ; ?>"/>
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-3 col-md-3">
+          <div class="col-lg-4 col-md-4 text-left">
             <label class="lables" for="fullName"> Username </label>
           </div>
           <div class="col-lg-7 col-md-7">
@@ -262,7 +279,7 @@ JQUERY4U = {
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-3 col-md-3">
+          <div class="col-lg-4 col-md-4 text-left">
             <label class="lables" for="pwd"> Password </label>
           </div>
           <div class="col-lg-7 col-md-7">
@@ -270,15 +287,15 @@ JQUERY4U = {
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-3 col-md-3">
-            <label class="lables" for="pwd1"> Re-Enter Password </label>
+          <div class="col-lg-4 col-md-4 text-left">
+            <label class="lables" for="pwd1"> Re-enter Password </label>
           </div>
           <div class="col-lg-7 col-md-7">
             <input type="text" name="CC_userPassword2" class="form-control input" id="pwd1" value="<?php echo isset($userPassword2) ? $userPassword2 : '' ; ?>"/>
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-3 col-md-3">
+          <div class="col-lg-4 col-md-4 text-left">
             <label class="lables" for="Email"> Email </label>
           </div>
           <div class="col-lg-7 col-md-7">
@@ -286,7 +303,7 @@ JQUERY4U = {
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-3 col-md-3">
+          <div class="col-lg-4 col-md-4 text-left">
             <label class="lables" for="Mobile"> Mobile </label>
           </div>
           <div class="col-lg-7 col-md-7">
@@ -294,7 +311,7 @@ JQUERY4U = {
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-4 col-md-4"> &nbsp; </div>
+          <div class="col-lg-5 col-md-5"> &nbsp; </div>
           <div class="col-lg-7 col-md-7">
             <div class="col-lg-7 col-md-7 captcha thumbnail noselect">
               <?php $xHash=generateRandomString(); 
@@ -307,15 +324,22 @@ JQUERY4U = {
             </div>
           </div>
         </div>
-         <?php 
-			if(isset($msg1)) {
+        <?php 
+			if(isset($msg1) and isset($_GET['error'])) {
 			?>
-				<div class="alert alert-danger" role="alert"><strong>Error!</strong><?php echo $msg1;?></div>
-			<?php
+        <div class="alert alert-danger" role="alert"><strong>Error! &nbsp; </strong><?php echo $msg1;?></div>
+        <?php
+			}
+		?>
+         <?php 
+			if(isset($msg1) and isset($_GET['status'])) {
+			?>
+        <div class="alert alert-success" role="alert"><strong>Great ! &nbsp; </strong><?php echo $msg1;?></div>
+        <?php
 			}
 		?>
         <div class="row">
-          <div class="col-lg-3 col-md-3">
+          <div class="col-lg-4 col-md-4">
             <label class="lables"> &nbsp; </label>
           </div>
           <div class="col-lg-7 col-md-7">
@@ -354,6 +378,13 @@ function showRight() {
 	$('.AskButtonsArea').hide("slow");
 	$('.Left').hide("fast");
 	$('.Right').show("slow");
+}
+</script>
+<script>
+JQUERY4U = {
+	showLeft: function() {
+		$('#SignIn').click();
+	}
 }
 </script>
 </body>

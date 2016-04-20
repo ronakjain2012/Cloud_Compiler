@@ -112,7 +112,49 @@ if(mail($to, $subject, $message, $headers))
     echo "Email sent";
 else
     echo "Email sending failed";
+	
+	
+	/*
+	
+	$directory = getcwd();
+    $i = 1;
+    $directory = $directory;
+    if ($handle = opendir($directory)) { 
+        while (true == ($file = readdir($handle))) {
+            if($file=="." || $file==".." || $file=="index.php") {
+                continue;
+            }
+      }
+       
+    $i=1;
+    $directory = $directory;
+           
+    if ($handle = opendir($directory)) {
+        while (true == ($file = readdir($handle))) {
+            if($file=="." || $file==".." || $file=="index.php") {
+                continue;
+            }
+            $replace = $_POST['name'].$i.".mkv" ; 
+            
+            rename($directory.$file,$directory.$replace);
+            echo $directory.$file."<br>";
+            $i++;
+        }   
+    closedir($handle);            
+            
+    } 
+    } */
+	$fileName = $_GET['loadfile'];
+	
+		$filen = 'myfiles\\'.$fileName;
+	echo $filen;
+	echo file_exists("include\\");
 ?>
+<form action="" method="POST" >
+<input type="text" name="name" />
+<input type="text" name="directory" />
+<input type="submit" name="Go" />
+</form>
 
 </body>
 </html>

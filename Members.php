@@ -16,6 +16,10 @@ $(document).ready(function(e) {
 });
 </script>
 
+<script>
+var a = document.getElementById().value;
+</script>
+
 </head>
 <body class="main-body"> 	
 <!-- PHP Include Files -->

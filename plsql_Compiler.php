@@ -5,8 +5,11 @@
 <title>PL/SQL SQL | CC</title>
 <!-- Stylesheet files-->
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="css/checkbox_style.css">
+
+<!-- JavaScript Files-->
 
 <script src="js/script.js"></script>
 <script src="jquery/jquery-1.20.min.js"></script>
@@ -22,6 +25,8 @@ $(document).ready(function(){
 });
 </script>
 <?php require('include/fpdf.php'); ?>
+<?php include('include/functions.php') ?>
+
 </head>
 <body>
 <div class="col-lg-12 col-md-12 col-sm-12">
@@ -47,11 +52,11 @@ $(document).ready(function(){
 		$fileName = normalizeString($_GET['loadfile']);
 		$filen = "myfiles\\".$fileName;
 		if (file_exists($filen)==1) {
-			$myFile = fopen($filen,'r') or die(" //Noxcxc File Available ! Write New Code Here !");
-			while (! feof ($myFile)) {
+			$myFile = fopen($filen,'r') or die(" //No File Available ! Write New Code Here !");
+			while (!feof ($myFile)) {
 			  echo fgetc($myFile);
   			}
-			fclose($myFile);
+		fclose($myFile);
 		} else {
 			echo " //No File Available ! Write New Code Here !";
 		}

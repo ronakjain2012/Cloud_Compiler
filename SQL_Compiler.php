@@ -21,6 +21,8 @@ $(document).ready(function(){
 });
 </script>
 <?php require('include/fpdf.php'); ?>
+<?php include('include/functions.php') ?>
+
 </head>
 <body>
 <div class="col-lg-12 col-md-12 col-sm-12">
@@ -40,7 +42,28 @@ $(document).ready(function(){
 ?>
 <div class="edit">
   <form action="sql_output.php" method="post" target="output" id="myForm">
-    <textarea name="editor" id="editor" class="editor editor-style" autofocus>show tables;
+    <textarea name="editor" id="editor" class="editor editor-style" autofocus>
+    <?php 
+	if(isset($_GET['loadfile'])){
+		$fileName = normalizeString($_GET['loadfile']);
+		$filen = "myfiles\\".$fileName;
+		if (file_exists($filen)==1) {
+			$myFile = fopen($filen,'r') or die(" //Noxcxc File Available ! Write New Code Here !");
+			while (! feof ($myFile)) {
+			  echo fgetc($myFile);
+  			}
+			fclose($myFile);
+		} else {
+			echo " //No File Available ! Write New Code Here !";
+		}
+	} else {
+echo "<?php 
+	echo 'Hello World';
+?>
+";
+	}
+
+?>
     </textarea>
         <script>
   			$('.editor').ace({ theme: 'chrome', lang: 'ruby' })

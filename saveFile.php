@@ -30,10 +30,10 @@
 					sleep(1);
 					if(rename($fileName,"myfiles\\".$fileName)) {
 						echo "<h1>File Saved !</h1>";
-						if($type=="php" and $type=="PHP")
-							echo "<input class='form-control' id='link' value='localhost/CC/PHP_Compiler.php?loadfile=".$fileName."'>";
-						else if($type=="sql" and $type=="SQL")
-							echo "<input class='form-control' id='link' value='localhost/CC/SQL_Compiler.php?loadfile=".$fileName."'>";
+						if($type=="php" or $type=="PHP")
+							echo "<input class='form-control' id='link' value='localhost/CC/PHP_Compiler.php?loadfile='".$fileName." \\'>";
+						else if($type=="sql" or $type=="SQL")
+							echo "<input class='form-control' id='link' value='localhost/CC/SQL_Compiler.php?loadfile=".$fileName." \\'>";
 							echo "<input class='form-control' id='link' value='localhost/CC/plsql_Compiler.php?loadfile=".$fileName."'>";
 						//unlink($fileName);
 							echo "<script> document.getElementById('link').select(); </script>";

@@ -4,7 +4,7 @@ function fullScreenEditor() {
 	if(c == true) {
 		document.getElementById('output').style.display = "none";
 		document.getElementById('myForm').setAttribute('target','_new');
-	} 
+	}
 	if (c == false) {
 		document.getElementById('output').style.display = "block";
 		document.getElementById('myForm').setAttribute('target','output');

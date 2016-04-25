@@ -69,7 +69,7 @@
             </div>
           </div>
         </div>
-        </a><a>
+        </a><a href="HTML_Compiler.php">
           <div class="col-md-3 col-sm-3">
             <div class="thumbnail"><img src="images/html.png" class="rotate-360" alt="HTML">
               <div class="caption">

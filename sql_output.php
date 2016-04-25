@@ -12,13 +12,16 @@
 	if(isset($_POST['editor'])) {
 		
 		include_once('DB.php');
+		
 		/*$host = "localhost";
 		$user_name = "root";
 		$user_pwd = "root";
 		$db= "test";
 		$con = new MySQLi($host,$user_name,$user_pwd);*/
+		
 		$db = Database::getInstance();
 		$con = $db->getConnection();
+		$con->select_db('test');
 		$query1 = $_POST['editor'];
 		if(substr($query1,-1) !== ';') {
 		$query1.=";";

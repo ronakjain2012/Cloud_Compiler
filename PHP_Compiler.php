@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>PHP Compiler</title>
+
 <!-- Stylesheet files-->
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -10,7 +11,6 @@
 <link rel="stylesheet" type="text/css" href="css/checkbox_style.css">
 
 <!-- JavaScript Files-->
-
 <script src="js/script.js"></script>
 <script src="jquery/jquery-1.20.min.js"></script>
 <script src="ace/ace.js"></script>
@@ -19,13 +19,16 @@
 <script src="jquery-ace.min.js"></script>
 <script src="js/tooltip.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
 <script>
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
 </script>
+
 <?php require('include/fpdf.php'); ?>
 <?php include('include/functions.php') ?>
+
 </head>
 <body>
 <!-- Bootstrap div Start -->

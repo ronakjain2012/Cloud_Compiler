@@ -192,7 +192,6 @@ img {
 
 .tabSize {
 	width:200px;
-	
 }
 
 .btn-fullsize {
@@ -200,7 +199,24 @@ img {
 	height:auto;
 	margin:5px 5px 5px 5px;
 }
+
+.sidebar {
+	height:100%;
+	min-height:100%;
+	position:relative;
+	background:#5B5B5B;
+	color:#F9F9F9;
+	padding: 15px 10px 10px 10px;
+}
+
+.workplace {
+	background:#E7E7E7;
+}
+
 @media screen and (max-width: 480px) {
+	* {
+		text-align:center;
+	}
 	.Welcome {
 		text-align:center;
 		margin-bottom:10px;

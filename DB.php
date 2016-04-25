@@ -26,15 +26,7 @@ class Database {
 	
 	public function getConnection() {
 		return $this->_connection;
-	}
-	
-	
-}
-
-class Query extends Database {
-	public static function run($sql) {
-		return parent::getInstance()->getConnection()->query($sql);
-	}
+	}	
 }
 
 ?>

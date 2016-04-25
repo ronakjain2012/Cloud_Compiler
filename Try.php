@@ -144,11 +144,10 @@ else
             
     } 
     } */
-	$fileName = $_GET['loadfile'];
 	
-		$filen = 'myfiles\\'.$fileName;
-	echo $filen;
-	echo file_exists("include\\");
+	echo "<hr>";
+	$token = md5(uniqid(rand(), TRUE));
+	echo $token;
 ?>
 <form action="" method="POST" >
 <input type="text" name="name" />

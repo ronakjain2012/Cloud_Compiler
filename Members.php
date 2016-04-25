@@ -15,13 +15,8 @@ $(document).ready(function(e) {
 	$('.Right').hide();
 });
 </script>
-
-<script>
-var a = document.getElementById().value;
-</script>
-
 </head>
-<body class="main-body"> 	
+<body class="main-body">
 <!-- PHP Include Files -->
 <?php include ("include/functions.php");?>
 <?php 
@@ -36,9 +31,10 @@ var a = document.getElementById().value;
 <!-- End -->
 <div class="col-lg-12 col-md-12">
   <div class="col-lg-12 col-md-12 Forms"> 
-  
-    <!-- Start AskButtonsArea -->
-    <br/><br/>
+    
+    <!-- Start AskButtonsArea --> 
+    <br/>
+    <br/>
     <div class="AskButtonsArea">
       <div class="Welcome"> Welcome , <br/>
         <img src="images/CC.png"/>
@@ -63,15 +59,27 @@ var a = document.getElementById().value;
 				if(isset($_POST['CC_userPassword']) and strlen($_POST['CC_userPassword']) >= 4) {
 					$name = normalizeString($_POST['CC_userName']);
 					$pwd = normalizeString($_POST['CC_userPassword']);
-						echo "<script> alert('in'); </script>";
+						
 					if(!$conn->connect_errno) {
 						$query = "select count(*) 'users' from user_login_information where (user_reg='$name' or user_name='$name' or user_mail='$name') and user_password='$pwd'";
-						echo $query;
+						//echo $query;
 						$res = $conn->query($query);
 						$result = $res->fetch_assoc();
 						if($res->num_rows === 1 and $result['users'] == 1) {
-							echo "<script> alert('log in susseccfully'); </script>";
-							
+							$token = md5(uniqid(rand(), TRUE));
+							$query = "insert into tokens (user_id,session_start,token) values((select user_reg from user_login_information where user_name='".$name."' or user_reg='".$name."' or user_mail='".$name."'),now(),'".$token."')";						
+							if($conn->query($query)) {
+								if(setcookie("tokenID",$token,time()+(60*60),"/")) {
+								}else {
+									header("location: ".$url."Members.php?p=old&error=invalidSession");
+									exit();
+									die();
+								}
+							} else {
+								header("location: ".$url."Members.php?p=old&error=invalidSession");
+								exit();
+								die();
+							}
 						} else {
 							header("location: ".$url."Members.php?p=old&error=invalid");
 							exit();
@@ -98,20 +106,30 @@ var a = document.getElementById().value;
 		$msg = null ;
 		if(isset($_GET['p']) and $_GET['p']=='old' and isset($_GET['error'])) {
 			?>
-      <script> JQUERY4U.showLeft(); </script>
+    <script>
+	$(document).ready(function(e) {
+	$('.Left').hide();
+	$('.Right').hide();
+	$('.AskButtonsArea').show('fast');
+	$('button#SignIn').click();
+	});
+	</script>
       <?php
 			$type = normalizeString($_GET['error']);
 			if($type=="invalid") {
-				$msg = "Enterd wrong ID Password";
+				$msg = "Enterd wrong ID Password.";
 			}
 			else if($type=="noConnection"){
-				$msg = "Sorry for inconveniens our Database is Undermantain";
+				$msg = "Sorry for inconveniens our Database is Undermantain.";
 			}
 			else if($type=="noPassword") {
-				$msg = "Wrong Password Entered or Passowrd Field left empty";
+				$msg = "Wrong Password Entered or Passowrd Field left empty.";
 			}
 			else if($type=="noUsername") {
-				$msg = "No UserID Provied";
+				$msg = "No UserID Provied.";
+			}
+			else if($type=="invalidSession") {
+				$msg = "Sorry, System is Unable to create uniqe Token for you.";
 			}
 			else {
 				$msg = "Error Recored ! we will fix it soon";	
@@ -136,17 +154,17 @@ var a = document.getElementById().value;
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-3 col-md-3">
-          </div>
+          <div class="col-lg-3 col-md-3"> </div>
           <div class="col-lg-7 col-md-7 free">
-             <input type="checkbox" id="checkbox1" class="css-checkbox"/> <label for="checkbox1" class="css-label lite-cyan-check">Remember Me </label>
+            <input type="checkbox" id="checkbox1" class="css-checkbox"/>
+            <label for="checkbox1" class="css-label lite-cyan-check">Remember Me </label>
           </div>
         </div>
         <?php 
 			if(isset($msg)) {
 			?>
         <div class="row">
-        	<div class="alert alert-danger" role="alert"><strong>Error!</strong><?php echo $msg;?></div>
+          <div class="alert alert-danger" role="alert"><strong>Error!</strong><?php echo $msg;?></div>
         </div>
         <?php
 			}
@@ -160,7 +178,7 @@ var a = document.getElementById().value;
       </form>
       <a class="LinkR"> Don't have account , Click here to Register </a> </div>
     <!-- Right Form Start -->
-    <div class="col-lg-6 col-md-6 Right ">
+    <div class="col-lg-6 col-md-6 Right">
       <div class="page-header"> <img src="images/CC.png"/> <br/>
         Sign Up </div>
       <?php
@@ -232,7 +250,15 @@ var a = document.getElementById().value;
 		$msg1 = null ;
 		if(isset($_GET['p']) and $_GET['p']=='new' and isset($_GET['error'])) {
 			?>
-      <script> JQUERY4U.showRight(); </script>
+      <script> 
+	$(document).ready(function(e) {
+	$('.Left').hide();
+	$('.Right').hide();
+	$('.AskButtonsArea').show('fast');
+	$('button#SignUp').click();
+	});
+	</script>
+
       <?php
 			$type = normalizeString($_GET['error']);
 			if($type=="alreadyExist") {
@@ -256,7 +282,7 @@ var a = document.getElementById().value;
 			$msg1 = "Successfully Registered With US.";	
 		}
 		
-		?>		
+		?>
       <form method="post" action="Members.php">
         <div class="row">
           <div class="col-lg-4 col-md-4 text-left">
@@ -335,7 +361,7 @@ var a = document.getElementById().value;
         <?php
 			}
 		?>
-         <?php 
+        <?php 
 			if(isset($msg1) and isset($_GET['status'])) {
 			?>
         <div class="alert alert-success" role="alert"><strong>Great ! &nbsp; </strong><?php echo $msg1;?></div>
@@ -351,7 +377,7 @@ var a = document.getElementById().value;
           </div>
         </div>
       </form>
-      <a class="LinkL"> Already have account , Click Here to Sing In </a> </div>
+      <a class="LinkL col-xs-offset-2"> Already have account , Click Here to Sing In </a> </div>
   </div>
 </div>
 <script>
@@ -377,19 +403,6 @@ $('.LinkR').click(function() {
 	$('.Left').hide("fast");
 	$('.Right').show("slow");
 });
-
-function showRight() {
-	$('.AskButtonsArea').hide("slow");
-	$('.Left').hide("fast");
-	$('.Right').show("slow");
-}
-</script>
-<script>
-JQUERY4U = {
-	showLeft: function() {
-		$('#SignIn').click();
-	}
-}
 </script>
 </body>
 <script src="js/bootstrap.js"></script>

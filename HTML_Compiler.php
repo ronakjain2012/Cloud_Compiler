@@ -93,19 +93,7 @@ echo "
           </div>
           <div class="col-lg-1 col-md-1"> 
             <!-- Trigger the modal with a button -->
-            <?php 
-				if(isset($_GET['loadfile']) and file_exists("myfiles\\".normalizeString($_GET['loadfile']))) {
-			?>
-            <form action="saveFile.php" target="_blank">
-            <input type="hidden" value="html" name="fileType" />
-            <input type="hidden" id="fileValue" name="fileValue" />
-            <input type="hidden" name="<?php echo normalizeString($_GET['loadfile']); ?>"/>
-            <input type="hidden" name="fileExt" value="html"/>
-            <button type="submit" class="btn btn-default btn-fullsize"> <span class="glyphicon glyphicon-save"></span> Save </button>
-            </form>
-            <?php } else {	?>
-            <button type="button" class="btn btn-default btn-fullsize" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-save"></span> Save </button>
-<?php } ?>
+              <button type="button" class="btn btn-default btn-fullsize" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-save" onClick="return readCode2();"></span> Save </button>
             <!-- Modal -->
             <div class="modal fade" id="myModal" role="dialog">
               <div class="modal-dialog">
@@ -142,7 +130,7 @@ echo "
         <br/>
       </div>
       <br/>
-      <iframe name="output" height="300" width="100%" src="sql_output.php" class="output" id="output">
+      <iframe name="output" height="300" width="100%" src="html_output.php" class="output" id="output">
       <iframe>
     </div>
   </div>

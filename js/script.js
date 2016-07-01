@@ -40,3 +40,4 @@ function readCode2() {
 		alert('Sorry ! No Code Is Written');
 	}
 }
+

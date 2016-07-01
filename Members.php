@@ -5,15 +5,27 @@
 <title>Sign Up | Sign In</title>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="css/checkbox_style.css">
-<link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="include/Captcha/stylesheet.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/checkbox_style.css">
+
 <script src="jquery/jquery-1.8.3.min.js"></script>
+<script src="js/tooltip.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 <script>
 $(document).ready(function(e) {
 	$('.Left').hide();
 	$('.Right').hide();
 });
+</script>
+
+<script>
+function showPass() {
+	document.getElementById('pwd').setAttribute('type','text');
+	document.getElementById('pwd1').setAttribute('type','text');
+}
+
 </script>
 </head>
 <body class="main-body">
@@ -26,7 +38,7 @@ $(document).ready(function(e) {
 	$conn->select_db('cc');
 	$res = null;
 	$result = null;
-	$url = "http://localhost/CC/";
+	$url = "";
 ?>
 <!-- End -->
 <div class="col-lg-12 col-md-12">
@@ -42,10 +54,19 @@ $(document).ready(function(e) {
       </div>
       <div class="col-lg-6 col-md-6">
         <button type="button" class="btn btn-success AskButtons btn-go" id="SignIn"> Sign In </button>
-      </div>
+      </div>	
       <div class="col-lg-6 col-md-6">
         <button type="button" class="btn btn-success AskButtons btn-go" id="SignUp"> Sign Up </button>
       </div>
+      <div class="row">
+     <?php 
+			if(isset($_GET['status'])) {
+			?>
+        <div class="alert alert-success" role="alert"><strong>Great ! &nbsp; </strong> You're Sucessfully Registerd With Us.</div>
+        <?php
+			}
+		?> 
+        </div>
     </div>
     <!-- End AskButtonsArea --> 
     <!-- Left Form Start -->
@@ -57,19 +78,37 @@ $(document).ready(function(e) {
 	  	if(isset($_REQUEST['login'])) {
 			if(isset($_POST['CC_userName']) and strlen($_POST['CC_userName']) > 1) {
 				if(isset($_POST['CC_userPassword']) and strlen($_POST['CC_userPassword']) >= 4) {
-					$name = normalizeString($_POST['CC_userName']);
-					$pwd = normalizeString($_POST['CC_userPassword']);
-						
+					$name = hash('md5',normalizeString($_POST['CC_userName']));
+					$name1 = normalizeString($_POST['CC_userName']);					
+					$pwd = hash('md5',normalizeString($_POST['CC_userPassword']));
 					if(!$conn->connect_errno) {
-						$query = "select count(*) 'users' from user_login_information where (user_reg='$name' or user_name='$name' or user_mail='$name') and user_password='$pwd'";
+						$query = "select count(*) 'users' from user_login_information where (user_reg='$name1' or user_name='$name' or user_mail='$name') and user_password='$pwd'";
 						//echo $query;
 						$res = $conn->query($query);
 						$result = $res->fetch_assoc();
 						if($res->num_rows === 1 and $result['users'] == 1) {
 							$token = md5(uniqid(rand(), TRUE));
-							$query = "insert into tokens (user_id,session_start,token) values((select user_reg from user_login_information where user_name='".$name."' or user_reg='".$name."' or user_mail='".$name."'),now(),'".$token."')";						
-							if($conn->query($query)) {
+							$query = "insert into tokens (user_id,session_start,token) values((select user_reg from user_login_information where user_name='".$name."' or user_reg='".$name1."' or user_mail='".$name."'),now(),'".$token."')";						
+							if($conn->query($query)) {	
 								if(setcookie("tokenID",$token,time()+(60*60),"/")) {
+								$query = "select user_id from tokens where token='".$token."'";	
+								$res = $conn->query($query);
+								$result=$res->fetch_assoc();
+								if($res->num_rows === 1 and isset($result['user_id'])) {
+									$user = $result['user_id'];
+									$query = "select u_name,u_profile from user_personal_information where user_id='".$user."'";
+									if($res = $conn->query($query)) {
+										$result = $res->fetch_assoc();
+										setcookie("userName",$result['u_name'],time()+60*60,"/");
+										setcookie("userProfile",$result['u_profile'],time()+60*60,"/");
+										setcookie("user",$user,time()+60*60,"/");
+									}
+								}
+			
+									
+									header("location: dashboard.php");
+									exit();
+									die();
 								}else {
 									header("location: ".$url."Members.php?p=old&error=invalidSession");
 									exit();
@@ -117,22 +156,22 @@ $(document).ready(function(e) {
       <?php
 			$type = normalizeString($_GET['error']);
 			if($type=="invalid") {
-				$msg = "Enterd wrong ID Password.";
+				$msg = " Enterd wrong ID Password.";
 			}
 			else if($type=="noConnection"){
-				$msg = "Sorry for inconveniens our Database is Undermantain.";
+				$msg = " Sorry for inconveniens our Database is Undermantain.";
 			}
 			else if($type=="noPassword") {
-				$msg = "Wrong Password Entered or Passowrd Field left empty.";
+				$msg = " Wrong Password Entered or Passowrd Field left empty.";
 			}
 			else if($type=="noUsername") {
-				$msg = "No UserID Provied.";
+				$msg = " No UserID Provied.";
 			}
 			else if($type=="invalidSession") {
-				$msg = "Sorry, System is Unable to create uniqe Token for you.";
+				$msg = " Sorry, System is Unable to create uniqe Token for you.";
 			}
 			else {
-				$msg = "Error Recored ! we will fix it soon";	
+				$msg = " Error Recored ! we will fix it soon";	
 			}
 		}
 	  ?>
@@ -150,14 +189,13 @@ $(document).ready(function(e) {
             <label class="lables" for="userPWD"> Password </label>
           </div>
           <div class="col-lg-7 col-md-7">
-            <input type="text" name="CC_userPassword" class="form-control input" id="userPWD"/>
+            <input type="password" name="CC_userPassword" class="form-control input" id="userPWD"/>
           </div>
         </div>
         <div class="row">
           <div class="col-lg-3 col-md-3"> </div>
-          <div class="col-lg-7 col-md-7 free">
-            <input type="checkbox" id="checkbox1" class="css-checkbox"/>
-            <label for="checkbox1" class="css-label lite-cyan-check">Remember Me </label>
+          <div class="col-lg-7 col-md-7 free text-left">
+            <a href="forget.php" style="cursor:alias"> <label>Forget Password </label> </a>
           </div>
         </div>
         <?php 
@@ -173,6 +211,7 @@ $(document).ready(function(e) {
           <div class="col-lg-3 col-md-3"> &nbsp; </div>
           <div class="col-lg-7 col-md-7">
             <input type="submit" class="btn btn-success form-control input btn-go" name="login" value="Proceed"/>
+      
           </div>
         </div>
       </form>
@@ -182,7 +221,6 @@ $(document).ready(function(e) {
       <div class="page-header"> <img src="images/CC.png"/> <br/>
         Sign Up </div>
       <?php
-					
 		$userName = isset($_POST['CC_userName']) ? normalizeString($_POST['CC_userName']) : null ;
 		$userID = isset($_POST['CC_userID']) ? normalizeString($_POST['CC_userID']) : '';
 		$userNameIden = isset($_POST['CC_userNameIden']) ? normalizeString($_POST['CC_userNameIden']) : null ;
@@ -201,7 +239,7 @@ $(document).ready(function(e) {
 				$res = $conn->query($query);
 				$result = $res->fetch_assoc();
 				if($res->num_rows === 1 and $result['users'] === 1) {
-					header("location: ".$url."?p=new&error=");
+					header("location: ".$url."?p=new&error=alreadyExist");
 					exit();
 					$errors = 1;
 				}
@@ -218,23 +256,28 @@ $(document).ready(function(e) {
 				//password check
 				if($userPassword != $userPassword2) {
 					header("location: ".$url."Members.php?p=new&error=password");
-					exit();
-					
+					exit();	
 					$errors = 1;
 				}
 				
 				//Captcha
 				if($hashCap != hash('md5',$captcha)) {
-					echo $hashCap."<br>";
-					echo hash('md5',$captcha)."<br>";
+					//echo $hashCap."<br>";
+					//echo hash('md5',$captcha)."<br>";
 					header("location: ".$url."Members.php?p=new&error=captcha");
 					exit();
 					$errors = 1;
 				}
 				
 				if($errors == 0) {
-					$query = "insert into user_login_information (user_reg,user_name,user_password,user_type,user_mail) values('$userID','$userName','$userPassword','l','$userEmail')";
+					$h_userName = hash('md5',$userName);
+					$h_userPassword = hash('md5',$userPassword);
+					$h_userEmail = hash('md5',$userEmail);
+					
+					$query = "insert into user_login_information (user_reg,user_name,user_password,user_type,user_mail) values('$userID','$h_userName','$h_userPassword','l','$h_userEmail')";
 					if($conn->query($query)){
+					$query = "insert into user_personal_information (user_id,u_name,u_nameID,u_tel,u_mail) values('$userID','$userNameIden','$userName','$userTel','$userEmail')";
+					$conn->query($query);
 					header("location: ".$url."Members.php?status=regeistered");
 					exit(); 
 					} else {
@@ -262,85 +305,90 @@ $(document).ready(function(e) {
       <?php
 			$type = normalizeString($_GET['error']);
 			if($type=="alreadyExist") {
-				$msg1 = "Already Exist.";
+				$msg1 = " Already Exist.";
 			}
 			else if($type=="password"){
-				$msg1 = "Password and Re-enter Password Should Match.";
+				$msg1 = " Password and Re-enter Password Should Match.";
 			}
 			else if($type=="captcha") {
-				$msg1 = "Enterd Captcha is not valid.";
+				$msg1 = " Enterd Captcha is not valid.";
 			}
 			else if($type=="unavailable") {
-				$msg1 = "Sorry, Database is down.";	
+				$msg1 = " Sorry, Database is down.";	
 			}
 			else {
-				$msg1 = "Recored ! we will fix it soon";	
+				$msg1 = " Recored ! we will fix it soon";	
 			}
-		}
-		
-		if(isset($_GET['status'])) {
-			$msg1 = "Successfully Registered With US.";	
 		}
 		
 		?>
       <form method="post" action="Members.php">
-        <div class="row">
+        <div class="row col-lg-12" >
           <div class="col-lg-4 col-md-4 text-left">
             <label class="lables" for="fullName"> Name </label>
           </div>
           <div class="col-lg-7 col-md-7">
-            <input type="text" name="CC_userNameIden" class="form-control input" id="userID" id="fullName" value="<?php echo isset($userNameIden) ? $userNameIden : '' ; ?>" />
+            <input type="text" name="CC_userNameIden" class="form-control input" id="fullName" onKeyPress="return lettersOnly(event);" value="<?php echo isset($userNameIden) ? $userNameIden : '' ; ?>" />
+          </div>
+          <div id="Wreg_nameFull">
           </div>
         </div>
-        <div class="row">
+        <div class="row col-lg-12" >
           <div class="col-lg-4 col-md-4 text-left">
             <label class="lables" for="fullName "> Registration ID </label>
           </div>
           <div class="col-lg-7 col-md-7">
-            <input type="text" name="CC_userID" class="form-control input" id="fullName" value="<?php echo isset($userID) ? $userID : '' ; ?>"/>
+            <input type="text" name="CC_userID" class="form-control input" id="reg_userID" value="<?php echo isset($userID) ? $userID : '' ; ?>"/>
+          </div>
+          <div id="Wreg_userID">
           </div>
         </div>
-        <div class="row">
+        <div class="row col-lg-12" >
           <div class="col-lg-4 col-md-4 text-left">
             <label class="lables" for="fullName"> Username </label>
           </div>
           <div class="col-lg-7 col-md-7">
-            <input type="text" name="CC_userName" class="form-control input" value="<?php echo isset($userName) ? $userName : '' ; ?>"/>
+            <input type="text" name="CC_userName" id="reg_userName" class="form-control input" value="<?php echo isset($userName) ? $userName : '' ; ?>"/>
+          </div>
+          <div id="Wreg_userName">
           </div>
         </div>
-        <div class="row">
+        <div class="row col-lg-12" id="Wpwd">
           <div class="col-lg-4 col-md-4 text-left">
             <label class="lables" for="pwd"> Password </label>
           </div>
           <div class="col-lg-7 col-md-7">
-            <input type="text" name="CC_userPassword" class="form-control input" id="pwd" value="<?php echo isset($userPassword) ? $userPassword : '' ; ?>"/>
+            <input type="password" name="CC_userPassword" class="form-control input" id="pwd" value="<?php echo isset($userPassword) ? $userPassword : '' ; ?>"/>
           </div>
         </div>
-        <div class="row">
+        <div class="row col-lg-12" id="Wpwd1">
           <div class="col-lg-4 col-md-4 text-left">
             <label class="lables" for="pwd1"> Re-enter Password </label>
           </div>
-          <div class="col-lg-7 col-md-7">
-            <input type="text" name="CC_userPassword2" class="form-control input" id="pwd1" value="<?php echo isset($userPassword2) ? $userPassword2 : '' ; ?>"/>
+          <div class="col-lg-7 col-md-7 text-right">
+            <input type="password" name="CC_userPassword2" class="form-control input" id="pwd1" value="<?php echo isset($userPassword2) ? $userPassword2 : '' ; ?>"/>
+          <label id="showPassword" onClick="showPass();"> Show Password </label>
           </div>
         </div>
-        <div class="row">
+        <div class="row col-lg-12">
           <div class="col-lg-4 col-md-4 text-left">
             <label class="lables" for="Email"> Email </label>
           </div>
           <div class="col-lg-7 col-md-7">
             <input type="email" name="CC_userEmail" class="form-control input" id="Email" value="<?php echo isset($userEmail) ? $userEmail : '' ; ?>" />
           </div>
+          <div id="WEmail">
+          </div>
         </div>
-        <div class="row">
+        <div class="row col-lg-12">
           <div class="col-lg-4 col-md-4 text-left">
             <label class="lables" for="Mobile"> Mobile </label>
           </div>
           <div class="col-lg-7 col-md-7">
-            <input type="tel" name="CC_userTel" class="form-control input" id="Mobile" value="<?php echo isset($userTel) ? $userTel : '' ; ?>"/>
+            <input type="tel" name="CC_userTel" class="form-control input" id="Mobile" onkeypress='return isNumberKey(event)' value="<?php echo isset($userTel) ? $userTel : '' ; ?>" maxlength="13"/>
           </div>
         </div>
-        <div class="row">
+        <div class="row col-lg-12">
           <div class="col-lg-5 col-md-5"> &nbsp; </div>
           <div class="col-lg-7 col-md-7">
             <div class="col-lg-7 col-md-7 captcha thumbnail noselect">
@@ -361,19 +409,12 @@ $(document).ready(function(e) {
         <?php
 			}
 		?>
-        <?php 
-			if(isset($msg1) and isset($_GET['status'])) {
-			?>
-        <div class="alert alert-success" role="alert"><strong>Great ! &nbsp; </strong><?php echo $msg1;?></div>
-        <?php
-			}
-		?>
-        <div class="row">
+        <div class="row col-lg-12">
           <div class="col-lg-4 col-md-4">
             <label class="lables"> &nbsp; </label>
           </div>
           <div class="col-lg-7 col-md-7">
-            <input type="submit" class="form-control btn btn-success btn-go" id="submit" name="newUser" />
+            <input type="submit" class="form-control btn btn-success btn-go" id="submit" value="Register" name="newUser" />
           </div>
         </div>
       </form>
@@ -404,6 +445,7 @@ $('.LinkR').click(function() {
 	$('.Right').show("slow");
 });
 </script>
+<script src="js/valid.js"></script>
 </body>
 <script src="js/bootstrap.js"></script>
 <?php 
@@ -423,7 +465,7 @@ $('.LinkR').click(function() {
 	}
 	
 	function setFont($data) {
-		$fonts = array("'agendaregular'","'nigma_scrawl_brkregular'","'alaskannightsregular'","'beccariaregular'");
+		$fonts = array("'figgins_sansitalic'","'lancastershireregular'","'libertaditalic'","'saginaw_bold'");
 		$font = $fonts[rand(0,4-1)];
     	return "<div style=\"font-size:22px;font-family:$font;position:relative;\">".$data."</div>";
 	}

@@ -76,7 +76,9 @@ echo "<?php
      </textarea>
         <script>
   			$('.editor').ace({ theme: 'twilight', lang: 'ruby' });
-	</script>
+			var editor = document.getElementById('editor');
+			editor.resize();
+		</script>
         <div class="input-group col-lg-12 col-md-12 col-sm-12 buttons"> <BR/>
           <input type="checkbox" id="checkbox1" class="css-checkbox" onClick="fullScreenEditor();"/>
           <label for="checkbox1" class="css-label lite-cyan-check">Result In New TAB</label>

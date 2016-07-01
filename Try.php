@@ -149,11 +149,27 @@ else
 	$token = md5(uniqid(rand(), TRUE));
 	echo $token;
 ?>
-<form action="" method="POST" >
-<input type="text" name="name" />
-<input type="text" name="directory" />
-<input type="submit" name="Go" />
-</form>
+<script>
+function showData() {
+	var answer=document.getElementById("mySelect");
+ alert(answer[answer.selectedIndex].value);
+}
+</script>
+<br/><br/><br/><br/>
+<select id="mySelect">
+	<option value="1"> 1 </option>
+    	<option value="2"> 2 </option>
+        	<option value="3"> 3 </option>
+            	<option value="4"> 4 </option>
+                	<option value="5"> 5 </option>
+</select>
+<button type="button" onClick="showData();"> alert </button>
+echo "<hr>";
+
+---------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+
+
 
 </body>
 </html>

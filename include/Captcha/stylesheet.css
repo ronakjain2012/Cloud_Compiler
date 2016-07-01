@@ -1,0 +1,82 @@
+
+
+@font-face {
+    font-family: 'figgins_sansitalic';
+    src: url('figgins_italic-webfont.woff2') format('woff2'),
+         url('figgins_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'lancastershireregular';
+    src: url('lancastershire-webfont.woff2') format('woff2'),
+         url('lancastershire-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'libertaditalic';
+    src: url('libertad-italic-webfont.woff2') format('woff2'),
+         url('libertad-italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'saginaw_bold';
+    src: url('saginawbold-webfont.woff2') format('woff2'),
+         url('saginawbold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'zany_racesregular';
+    src: url('zany_races-webfont.woff2') format('woff2'),
+         url('zany_races-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'apple_garamond_lightitalic';
+    src: url('applegaramond-lightitalic-webfont.woff2') format('woff2'),
+         url('applegaramond-lightitalic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'apple_garamonditalic';
+    src: url('applegaramond-italic-webfont.woff2') format('woff2'),
+         url('applegaramond-italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
